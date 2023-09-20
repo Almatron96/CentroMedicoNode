@@ -4,7 +4,7 @@ async function guardarMedico(medico) {
   try {
     const query = `INSERT INTO 
       medico(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, cedula, correo, telefono_movil, telefono_fijo, 
-      fecha_nacimiento, estado_civil, id_usuario) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11);`;
+      fecha_nacimiento, estado_civil, especialidad id_usuario) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11, $12);`;
 
     const values = [
       medico.primer_nombre,
@@ -17,6 +17,7 @@ async function guardarMedico(medico) {
       medico.telefono_fijo,
       medico.fecha_nacimiento,
       medico.estado_civil,
+      medico.especialidad,
       medico.id_usuario
     ];
 

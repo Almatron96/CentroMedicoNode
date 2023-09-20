@@ -34,6 +34,7 @@ async function guardarMedico(medico) {
             telefono_fijo: medico.telefono_fijo,
             fecha_nacimiento: medico.fecha_nacimiento,
             estado_civil: medico.estado_civil,
+            especialidad: medico.especialidad,
             contrasenia: medico.contrasenia,
             id_usuario: usuarioGuardado // Asociar al usuario recién creado
         };
