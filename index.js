@@ -8,6 +8,7 @@ const { encriptar_contrasenia } = require('./utilitarios/encriptar_contrasenia')
 const app = express();
 
 // middelwares
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -18,7 +19,7 @@ app.use('/paciente', pacienteRoute);
 app.use('/cita_medica',citaRoute );
 app.use('/medico',medicoRoute );
 
-app.use(cors());
+
 
 app.listen(process.env.PORT || 8080, () =>{
   console.log('Server on port 8080');
