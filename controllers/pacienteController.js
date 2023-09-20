@@ -24,7 +24,24 @@ async function guardarPaciente(req, res) {
   }
 }
 
+async function listarPaciente(req, res) {
+  try {
+    const resultado = await pacienteService.listarPaciente();
+
+    // Verifica si se produjo un error al guardar el paciente
+    if (resultado.error) {
+      return res.status(resultado.status).json(resultado.error);
+    }
+
+    // Si se guardó correctamente, devuelve una respuesta exitosa
+    return res.status(200).json(resultado);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json('Error interno del servidor');
+  }
+}
 
 module.exports = {
   guardarPaciente,
+  listarPaciente
 };

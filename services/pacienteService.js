@@ -49,6 +49,18 @@ async function guardarPaciente(paciente) {
     }
 }
 
+async function listarPaciente() {
+    try {
+     const pacientes = await pacienteQuerys.listarPaciente();
+     console.log(pacientes.rows);
+     return pacientes;
+    } catch (error) {
+        console.error('Error al listar el paciente:', error);
+    }
+}
+
+
 module.exports = {
-    guardarPaciente
+    guardarPaciente,
+    listarPaciente
 };

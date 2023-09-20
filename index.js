@@ -2,6 +2,7 @@ const express = require('express');
 const loginRoute = require('./routes/loginRoute');
 const pacienteRoute = require('./routes/pacienteRoute');
 const citaRoute = require('./routes/citaRoute');
+const medicoRoute = require('./routes/medicoRoute');
 const { encriptar_contrasenia } = require('./utilitarios/encriptar_contrasenia');
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/login', loginRoute);
 app.use('/paciente', pacienteRoute);
 app.use('/cita_medica',citaRoute );
+app.use('/medico',medicoRoute );
 
 app.listen(8080, () => {
   console.log(`Server is up and running on 8080 ...`);
