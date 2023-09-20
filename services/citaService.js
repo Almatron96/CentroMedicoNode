@@ -33,8 +33,17 @@ async function guardarCitas(cita) {
         throw new Error(error);
     }
 }
+async function listarCitaDelDia() {
+    try {
+     const citas = await citaQuerys.listarCitaDelDia();
+     return citas;
+    } catch (error) {
+        console.error('Error al listar las citas.', error);
+    }
+}
 
 module.exports = {
     listarFechas,
-    guardarCitas
+    guardarCitas,
+    listarCitaDelDia
 };

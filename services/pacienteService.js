@@ -60,6 +60,7 @@ async function listarPaciente() {
 }
 
 
+
 module.exports = {
     guardarPaciente,
     listarPaciente

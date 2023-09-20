@@ -1,13 +1,18 @@
-const  citaService  = require('../services/citaService');
+const citaService = require('../services/citaService');
 
 async function listarFechas(req, res) {
   try {
-    console.log("FECHA INGRESADA: "+ req.body.fecha);
-    const fechasResultado = await citaService.listarFechas(req.body.fecha);
-    if (fechasResultado.error) {
-      return res.status(fechasResultado.status).json(fechasResultado.error);
+    console.log("FECHA INGRESADA: " + req.body.fecha);
+    const citasDeldia
+      = await citaService.listarFechas(req.body.fecha);
+    if (citasDeldia
+      .error) {
+      return res.status(citasDeldia
+        .status).json(citasDeldia
+          .error);
     }
-    return res.status(200).json(fechasResultado);
+    return res.status(200).json(citasDeldia
+    );
   } catch (error) {
     console.error(error);
     return res.status(500).json('Error interno del servidor');
@@ -15,20 +20,34 @@ async function listarFechas(req, res) {
 }
 
 async function guardarCitas(req, res) {
-    try {
-      console.log("CITA INGRESADA:  " + req.body);
-      const resultado = await citaService.guardarCitas(req.body);
-      if (resultado.error) {
-        return res.status(resultado.status).json(resultado.error);
-      }
-      return res.status(200).json("Cita agendada correctamente.");
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json('Error interno del servidor');
+  try {
+    console.log("CITA INGRESADA:  " + req.body);
+    const resultado = await citaService.guardarCitas(req.body);
+    if (resultado.error) {
+      return res.status(resultado.status).json(resultado.error);
     }
+    return res.status(200).json("Cita agendada correctamente.");
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json('Error interno del servidor');
   }
+}
+
+async function listarCitaDelDia(req, res) {
+  try {
+    const citasDeldia = await citaService.listarCitaDelDia(req.body.fecha);
+    if (citasDeldia.error) {
+      return res.status(citasDeldia.status).json(citasDeldia.error);
+    }
+    return res.status(200).json(citasDeldia);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json('Error interno del servidor');
+  }
+}
 
 module.exports = {
-    listarFechas,
-    guardarCitas
+  listarFechas,
+  guardarCitas,
+  listarCitaDelDia
 };

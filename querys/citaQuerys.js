@@ -46,7 +46,23 @@ async function guardarCitas(cita) {
     }
 }
 
+
+async function listarCitaDelDia() {
+    try {
+        const consulta = `
+        select * from cita_medica where DATE(fecha_inicio) = current_date and estado = 'Agendada'
+        `;  
+        const citas = await pool.query(consulta);
+        
+        return citas.rows;
+    } catch (error) {
+        console.error('Error al ejecutar la consulta:', error);
+        throw error;
+    }
+}
+
 module.exports = {
     listarFechas,
-    guardarCitas
+    guardarCitas,
+    listarCitaDelDia
   };
