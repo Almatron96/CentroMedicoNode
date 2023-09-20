@@ -49,8 +49,6 @@ async function guardarMedico(medico) {
     }
 }
 
-
-
 async function listarMedico() {
     try {
      const medicos = await medicoQuerys.listarMedico();

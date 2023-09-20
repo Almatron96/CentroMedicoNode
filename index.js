@@ -3,6 +3,7 @@ const loginRoute = require('./routes/loginRoute');
 const pacienteRoute = require('./routes/pacienteRoute');
 const citaRoute = require('./routes/citaRoute');
 const medicoRoute = require('./routes/medicoRoute');
+const cors = require('cors');
 const { encriptar_contrasenia } = require('./utilitarios/encriptar_contrasenia');
 const app = express();
 
@@ -17,8 +18,10 @@ app.use('/paciente', pacienteRoute);
 app.use('/cita_medica',citaRoute );
 app.use('/medico',medicoRoute );
 
-app.listen(8080, () => {
-  console.log(`Server is up and running on 8080 ...`);
+app.use(cors());
+
+app.listen(process.env.PORT || 8080, () =>{
+  console.log('Server on port 8080');
 });
 
 
