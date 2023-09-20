@@ -1,0 +1,43 @@
+const pool = require('../databaseConfig');
+
+async function obtenerUsuarioPorCorreo(correo) {
+  try {
+    const query = 'SELECT * FROM usuario WHERE correo = $1';
+    const values = [correo];
+    const result = await pool.query(query, values);
+   // console.log(result.rows);
+    return result.rows[0]; // Devuelve el primer usuario encontrado o null si no se encuentra
+  } catch (error) {
+    console.error('Error al consultar la base de datos:', error);
+    throw error; // manejar el error 
+  }
+}
+
+async function guardarUsuario(usuario) {
+  try {
+    const query =`INSERT INTO usuario(nombre_usuario, contrasenia, correo, activo, tipo_usuario) VALUES ($1, $2, $3, $4, $5)  RETURNING id_usuario`;
+    const values = [
+      usuario.nombre_usuario,
+      usuario.contrasenia,
+      usuario.correo,
+      usuario.activo,
+      usuario.tipo_usuario
+    ];
+
+    const result = await pool.query(query, values);
+    console.log("ID DE USUARIO ES: " +result.rows[0].id_usuario);
+
+    return result.rows[0].id_usuario; // 
+  } catch (error) {
+    console.error('Error al consultar la base de datos:', error);
+    throw error; 
+  }
+}
+
+
+
+module.exports = {
+  obtenerUsuarioPorCorreo, 
+  guardarUsuario // exportamos la función
+};
+
