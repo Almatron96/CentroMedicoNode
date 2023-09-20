@@ -7,12 +7,12 @@ async function listarFechas(fecha) {
             FROM cita_medica
             WHERE DATE_TRUNC('day', fecha_inicio) = TO_TIMESTAMP($1, 'YYYY-MM-DD HH24:MI:SS.US')
         `;
-        
+
         const result = await pool.query(consulta, [fecha]);
-        
+
         // formatear las fechas
         const fechas = result.rows.map(row => row.fecha);
-        
+
         return fechas;
     } catch (error) {
         console.error('Error al ejecutar la consulta:', error);
@@ -37,7 +37,7 @@ async function guardarCitas(cita) {
             cita.id_paciente
         ];
         const result = await pool.query(consulta, values);
-        
+
         return result;
 
     } catch (error) {
@@ -47,13 +47,22 @@ async function guardarCitas(cita) {
 }
 
 
-async function listarCitaDelDia() {
+async function listarCitaDelDia(medico_id_usuario) {
     try {
         const consulta = `
-        select * from cita_medica where DATE(fecha_inicio) = current_date and estado = 'Agendada'
-        `;  
-        const citas = await pool.query(consulta);
-        
+        select cm.especialidad, cm.estado, cm.fecha_inicio, cm.fecha_fin, cm.observacion, cm.id_paciente
+        from usuario u 
+        inner join medico m ON u.id_usuario = m.id_usuario 
+        inner join cita_medica cm ON cm.id_medico = m.id_medico
+        where u.id_usuario = $1
+        AND DATE(fecha_inicio) = current_date
+        AND estado = 'Agendada'
+        `;
+
+        console.log("DATOS RECIBIDOS:  " + medico_id_usuario);
+        const values = [medico_id_usuario]
+        const citas = await pool.query(consulta,values);
+
         return citas.rows;
     } catch (error) {
         console.error('Error al ejecutar la consulta:', error);
@@ -65,4 +74,4 @@ module.exports = {
     listarFechas,
     guardarCitas,
     listarCitaDelDia
-  };
+};

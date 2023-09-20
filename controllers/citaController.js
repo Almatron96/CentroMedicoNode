@@ -3,16 +3,11 @@ const citaService = require('../services/citaService');
 async function listarFechas(req, res) {
   try {
     console.log("FECHA INGRESADA: " + req.body.fecha);
-    const citasDeldia
-      = await citaService.listarFechas(req.body.fecha);
-    if (citasDeldia
-      .error) {
-      return res.status(citasDeldia
-        .status).json(citasDeldia
-          .error);
+    const citasDeldia = await citaService.listarFechas(req.body.fecha);
+    if (citasDeldia.error) {
+      return res.status(citasDeldia.status).json(citasDeldia.error);
     }
-    return res.status(200).json(citasDeldia
-    );
+    return res.status(200).json(citasDeldia);
   } catch (error) {
     console.error(error);
     return res.status(500).json('Error interno del servidor');
@@ -35,7 +30,9 @@ async function guardarCitas(req, res) {
 
 async function listarCitaDelDia(req, res) {
   try {
-    const citasDeldia = await citaService.listarCitaDelDia(req.body.fecha);
+    const citasDeldia = await citaService.listarCitaDelDia(req.body.id_usuario);
+    console.log("ESTE ES EL IDDDDD: " +req.body.id_usuario);
+    
     if (citasDeldia.error) {
       return res.status(citasDeldia.status).json(citasDeldia.error);
     }

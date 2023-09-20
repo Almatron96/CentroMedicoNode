@@ -33,9 +33,10 @@ async function guardarCitas(cita) {
         throw new Error(error);
     }
 }
-async function listarCitaDelDia() {
+async function listarCitaDelDia(id_usuario) {
     try {
-     const citas = await citaQuerys.listarCitaDelDia();
+     console.log("ID EN EL SERVICES: " + id_usuario);
+     const citas = await citaQuerys.listarCitaDelDia(id_usuario);
      return citas;
     } catch (error) {
         console.error('Error al listar las citas.', error);
