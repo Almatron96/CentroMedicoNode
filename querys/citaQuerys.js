@@ -50,10 +50,12 @@ async function guardarCitas(cita) {
 async function listarCitaDelDia(medico_id_usuario) {
     try {
         const consulta = `
-        select cm.especialidad, cm.estado, cm.fecha_inicio, cm.fecha_fin, cm.observacion, cm.id_paciente
+        select current_date as fecha,  cm.especialidad, cm.estado, extract(hour from  fecha_inicio) as hora_inicio , 
+        extract(hour from  fecha_fin) as hora_fin,  cm.observacion, p.primer_nombre, p.primer_apellido
         from usuario u 
         inner join medico m ON u.id_usuario = m.id_usuario 
         inner join cita_medica cm ON cm.id_medico = m.id_medico
+        inner join paciente p on p.id_paciente = cm.id_paciente 
         where u.id_usuario = $1
         AND DATE(fecha_inicio) = current_date
         AND estado = 'Agendada'
