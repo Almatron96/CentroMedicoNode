@@ -32,7 +32,7 @@ async function listarCitaDelDia(req, res) {
   try {
     const citasDeldia = await citaService.listarCitaDelDia(req.body.id_usuario);
     console.log("ESTE ES EL IDDDDD: " +req.body.id_usuario);
-    
+    console.log(citasDeldia);
     if (citasDeldia.error) {
       return res.status(citasDeldia.status).json(citasDeldia.error);
     }
