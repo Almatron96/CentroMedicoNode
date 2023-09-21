@@ -1,0 +1,10 @@
+//se ejecuta directamente en la base de datos para registrar el primer usuario del sistema
+//que es la secretaria. 
+//usuario:malejandra@example.com contraseña:1585648732 
+
+INSERT INTO usuario(nombre_usuario, contrasenia, correo, activo, tipo_usuario)
+VALUES ('Maria8732', '$2a$10$jXtoebKPwt2ocvXtvB5VXOcvXUaqd5xaPlmVu0Ey8L3oorwsVeBNy', 'malejandra@example.com', true, 'Secretaria')
+
+INSERT INTO secretaria(primer_nombre, segundo_nombre , primer_apellido,  segundo_apellido, cedula, correo, telefono_movil, telefono_fijo, fecha_nacimiento,estado_civil, id_usuario)
+VALUES ('Maria', 'Alejandra', 'Ruiz', 'Jiménez', '1585648732', 'malejandra@example.com', '1234567890', '9876543210', '1990-01-15', 'Soltero(a)', 1)
+
