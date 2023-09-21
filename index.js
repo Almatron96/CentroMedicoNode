@@ -3,6 +3,7 @@ const loginRoute = require('./routes/loginRoute');
 const pacienteRoute = require('./routes/pacienteRoute');
 const citaRoute = require('./routes/citaRoute');
 const medicoRoute = require('./routes/medicoRoute');
+const historia_clinicaRoute = require('./routes/historia_clinicaRoute');
 const cors = require('cors');
 const { encriptar_contrasenia } = require('./utilitarios/encriptar_contrasenia');
 const app = express();
@@ -18,6 +19,7 @@ app.use('/login', loginRoute);
 app.use('/paciente', pacienteRoute);
 app.use('/cita_medica',citaRoute );
 app.use('/medico',medicoRoute );
+app.use('/historia_clinica',historia_clinicaRoute );
 
 
 

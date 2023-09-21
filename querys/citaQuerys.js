@@ -51,7 +51,7 @@ async function listarCitaDelDia(medico_id_usuario) {
     try {
         const consulta = `
         select current_date as fecha,  cm.especialidad, cm.estado, extract(hour from  fecha_inicio) as hora_inicio , 
-        extract(hour from  fecha_fin) as hora_fin,  cm.observacion, p.primer_nombre, p.primer_apellido
+        extract(hour from  fecha_fin) as hora_fin,  cm.observacion, p.primer_nombre, p.primer_apellido, cm.id_cita_medica
         from usuario u 
         inner join medico m ON u.id_usuario = m.id_usuario 
         inner join cita_medica cm ON cm.id_medico = m.id_medico
