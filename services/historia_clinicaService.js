@@ -59,7 +59,16 @@ async function guardar_historia_clinica(historia) {
     }
 }
 
+async function listarHistoriaClinicaPorMedico(id_medico) {
+    try {
+     const citas = await historia_clinica_Querys.listarHistoriaClinicaPorMedico(id_medico);
+     return citas;
+    } catch (error) {
+        console.error('Error al listar las citas.', error);
+    }
+}
 
 module.exports = {
-    guardar_historia_clinica
+    guardar_historia_clinica,
+    listarHistoriaClinicaPorMedico
 };

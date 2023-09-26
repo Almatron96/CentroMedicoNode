@@ -1,4 +1,5 @@
 const citaQuerys = require('../querys/citaQuerys');  // 
+const mail = require('../utilitarios/mailer');
 
 async function listarFechas(fecha) {
     try {
@@ -42,9 +43,23 @@ async function listarCitaDelDia(id_usuario) {
         console.error('Error al listar las citas.', error);
     }
 }
+async function listarCitasPendientes() {
+    try {
+     const citas = await citaQuerys.listarCitasPendientes();
+     if (citas){
+        console.log("ENTRA A LAS CITAS");
+        mail.enviarMailPendientes(citas);
+     }
+    } catch (error) {
+        console.error('Error al listar las citas.', error);
+    }
+}
+
+
 
 module.exports = {
     listarFechas,
     guardarCitas,
-    listarCitaDelDia
+    listarCitaDelDia,
+    listarCitasPendientes
 };

@@ -6,6 +6,8 @@ const medicoRoute = require('./routes/medicoRoute');
 const historia_clinicaRoute = require('./routes/historia_clinicaRoute');
 const cors = require('cors');
 const { encriptar_contrasenia } = require('./utilitarios/encriptar_contrasenia');
+const mail = require('./utilitarios/mailer');
+const citaService = require('./services/citaService');
 const app = express();
 
 // middelwares
@@ -26,8 +28,10 @@ app.use('/historia_clinica',historia_clinicaRoute );
 app.listen(process.env.PORT || 8080, () =>{
   console.log('Server on port 8080');
 });
+ 
+citaService.listarCitasPendientes();
 
-
+//mail.enviarMail().catch(console.error);
 
 /* const contrasenia = new encriptar_contrasenia();
 (async () => {
