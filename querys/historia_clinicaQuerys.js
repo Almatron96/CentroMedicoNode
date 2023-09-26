@@ -32,7 +32,7 @@ async function listarHistoriaClinicaPorMedico(id_medico) {
     try {
         const consulta = `
         
-SELECT DISTINCT p.cedula, cm.id_paciente, cm.id_medico, hc.numero_historia,
+        SELECT DISTINCT p.cedula, p.primer_nombre, p.primer_apellido, p.segundo_apellido, cm.id_paciente, cm.id_medico, hc.numero_historia,
 a.antecedente_alergico, a.antecedente_familiar, a.antecedente_personal, a.antecedente_quirurgico,
 ef.estatura, ef.frecuencia_respiratoria, ef.peso, ef.pulso,ef.presion_arterial, ef.tipo_sanguineo,
 t.indicaciones, t.duracion, t.medicacion
