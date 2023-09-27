@@ -24,8 +24,54 @@ async function enviarMail() {
   console.log("Message sent: %s", info.messageId);
 }
 
+async function enviarMailPaciente(datos) {
+  const info = await transporter.sendMail({
+    from: 'cmcarrasco2023@gmail.com',
+    to: datos.correo,
+    subject: "Registro exitoso en el sistema del Centro Médico Carrasco.",
+    html: ` <h3>El equipo de Centro Médico Carrasco le da la bienvenida.</h3>
+    <p>
+    Estimado ${datos.primer_nombre} ${datos.primer_apellido}  ${datos.segundo_apellido} le recordamos que sus credenciales de acceso son:
+    <br>
+    Usuario: <b> su correo electrónico.</b>
+    <br>
+    Contraseña: <b>su número de cédula.</b>
+    </p>
+    <p> 
+    Cualquier duda o inconveniente por favor comunicarse al correo:
+    <br>
+    <b>cmcarrasco2023@gmail.com</b>
+    </p>`,
+  });
+
+  console.log("Message sent: %s", info.messageId);
+}
+
+async function enviarMailMedico(datos) {
+  const info = await transporter.sendMail({
+    from: 'cmcarrasco2023@gmail.com',
+    to: datos.correo,
+    subject: "Registro exitoso en el sistema del Centro Médico Carrasco.",
+    html: ` <h3>El equipo de Centro Médico Carrasco le da la bienvenida.</h3>
+    <p>
+    Estimado ${datos.primer_nombre} ${datos.primer_apellido}  ${datos.segundo_apellido} le recordamos que sus credenciales de acceso son:
+    <br>
+    Usuario: <b> su correo electrónico.</b>
+    <br>
+    Contraseña: <b>su número de cédula.</b>
+    </p>
+    <p> 
+    Cualquier duda o inconveniente por favor comunicarse al correo:
+    <br>
+    <b>cmcarrasco2023@gmail.com</b>
+    </p>`,
+  });
+
+  console.log("Message sent: %s", info.messageId);
+}
+
 async function enviarMailPendientes(datos) {
-  
+
   for (const fila of datos.rows) {
     try {
       const info = await transporter.sendMail({
@@ -70,5 +116,7 @@ async function enviarMailPendientes(datos) {
 
 module.exports = {
   enviarMail,
-  enviarMailPendientes
-  };
+  enviarMailPendientes,
+  enviarMailPaciente,
+  enviarMailMedico
+};

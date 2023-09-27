@@ -29,7 +29,7 @@ app.listen(process.env.PORT || 8080, () =>{
   console.log('Server on port 8080');
 });
  
-citaService.listarCitasPendientes();
+citaService.correoDeCitasPendientes();
 
 //mail.enviarMail().catch(console.error);
 

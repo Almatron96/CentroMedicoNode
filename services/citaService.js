@@ -36,7 +36,6 @@ async function guardarCitas(cita) {
 }
 async function listarCitaDelDia(id_usuario) {
     try {
-     console.log("ID EN EL SERVICES: " + id_usuario);
      const citas = await citaQuerys.listarCitaDelDia(id_usuario);
      return citas;
     } catch (error) {
@@ -45,7 +44,7 @@ async function listarCitaDelDia(id_usuario) {
 }
 
 
-async function listarCitasPendientes() {
+async function correoDeCitasPendientes() {
     try {
      const citas = await citaQuerys.listarCitasPendientes();
      if (citas){
@@ -79,7 +78,7 @@ module.exports = {
     listarFechas,
     guardarCitas,
     listarCitaDelDia,
-    listarCitasPendientes,
+    correoDeCitasPendientes,
     listarCitasPorMedico,
     listarCitasPorCedulaPacienteOMedico
 };

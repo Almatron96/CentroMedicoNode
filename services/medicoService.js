@@ -1,6 +1,7 @@
 const medicoQuerys = require('../querys/medicoQuerys');
 const usuarioService = require('./usuarioService');
 const utilitarios = require('../utilitarios/generar_nombre_usuario');
+const mail = require('../utilitarios/mailer');
 
 // Función para guardar un medico
 async function guardarMedico(medico) {
@@ -44,6 +45,14 @@ async function guardarMedico(medico) {
         // Guardar el nuevo medico en la base de datos
         await medicoQuerys.guardarMedico(nuevoMedico);
 
+        const nuevoCorreo = {
+            primer_nombre: medico.primer_nombre,
+            primer_apellido: medico.primer_apellido,
+            segundo_apellido: medico.segundo_apellido,
+            correo: medico.correo,
+        };
+
+        mail.enviarMailMedico(nuevoCorreo);
         return 'Médico guardado correctamente.';
     } catch (error) {
         console.error('Error al guardar el medico:', error);

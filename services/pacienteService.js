@@ -1,6 +1,7 @@
 const usuarioService = require('./usuarioService');
 const utilitarios = require('../utilitarios/generar_nombre_usuario');
 const pacienteQuerys = require('../querys/pacienteQuerys');
+const mail = require('../utilitarios/mailer');
 
 // Función para guardar un paciente
 async function guardarPaciente(paciente) {
@@ -42,6 +43,15 @@ async function guardarPaciente(paciente) {
         // Guardar el nuevo paciente en la base de datos
         await pacienteQuerys.guardarPaciente(nuevoPaciente);
 
+        const nuevoCorreo={
+            primer_nombre: paciente.primer_nombre,
+            primer_apellido: paciente.primer_apellido,
+            segundo_apellido: paciente.segundo_apellido,
+            correo: paciente.correo
+        };
+
+        mail.enviarMailPaciente(nuevoCorreo);
+        
         return 'Paciente guardado correctamente.';
     } catch (error) {
         console.error('Error al guardar el paciente:', error);
@@ -58,7 +68,6 @@ async function listarPaciente() {
         console.error('Error al listar el paciente:', error);
     }
 }
-
 
 
 module.exports = {
