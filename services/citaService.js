@@ -47,7 +47,6 @@ async function listarCitasPendientes() {
     try {
      const citas = await citaQuerys.listarCitasPendientes();
      if (citas){
-        console.log("ENTRA A LAS CITAS");
         mail.enviarMailPendientes(citas);
      }
     } catch (error) {
@@ -55,11 +54,20 @@ async function listarCitasPendientes() {
     }
 }
 
-
+async function listarCitasPorCedulaPacienteOMedico(cedula) {
+    try {
+    console.log(cedula);
+     const citas = await citaQuerys.listarCitasPorCedulaPacienteOMedico(cedula);
+     return citas;
+    } catch (error) {
+        console.error('Error al listar las citas.', error);
+    }
+}
 
 module.exports = {
     listarFechas,
     guardarCitas,
     listarCitaDelDia,
-    listarCitasPendientes
+    listarCitasPendientes,
+    listarCitasPorCedulaPacienteOMedico
 };

@@ -97,9 +97,37 @@ async function listarCitasPendientes() {
     }
 }
 
+async function listarCitasPorCedulaPacienteOMedico(cedula) {
+    try {
+        const consulta = `
+        select current_date as fecha,  cm.especialidad, cm.estado, extract(hour from  fecha_inicio) as hora_inicio, 
+        extract(hour from  fecha_fin) as hora_fin,  cm.observacion, p.primer_nombre, p.primer_apellido, cm.id_cita_medica,
+		p.id_paciente, m.id_medico
+        from usuario u 
+        inner join medico m ON u.id_usuario = m.id_usuario 
+        inner join cita_medica cm ON cm.id_medico = m.id_medico
+        inner join paciente p on p.id_paciente = cm.id_paciente 
+        where p.cedula = $1 OR m.cedula= $2        
+        `;
+
+        const values = [
+            cedula.cedula_paciente,
+            cedula.cedula_medico
+        ]
+        const result = await pool.query(consulta,values);
+
+        console.log(result.rows);
+        
+        return result;
+    } catch (error) {
+        console.error('Error al ejecutar la consulta:', error);
+        throw error;
+    }
+}
 module.exports = {
     listarFechas,
     guardarCitas,
     listarCitaDelDia,
-    listarCitasPendientes
+    listarCitasPendientes,
+    listarCitasPorCedulaPacienteOMedico
 };

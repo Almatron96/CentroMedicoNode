@@ -7,5 +7,5 @@ const router = express.Router();
 router.post('/listar_fechas', citaController.listarFechas);
 router.post('/guardar', citaController.guardarCitas);
 router.post('/citas_del_dia', citaController.listarCitaDelDia);
-
+router.post('/listar_citas_por_cedula', citaController.listarCitasPorCedulaPacienteOMedico);
 module.exports = router;
