@@ -46,7 +46,7 @@ async function listarCitaDelDia(id_usuario) {
 
 async function correoDeCitasPendientes() {
     try {
-     const citas = await citaQuerys.listarCitasPendientes();
+     const citas = await citaQuerys.listarCorreoCitasPendientes();
      if (citas){
         mail.enviarMailPendientes(citas);
      }

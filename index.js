@@ -9,6 +9,7 @@ const { encriptar_contrasenia } = require('./utilitarios/encriptar_contrasenia')
 const mail = require('./utilitarios/mailer');
 const citaService = require('./services/citaService');
 const app = express();
+const cron = require('node-cron');
 
 // middelwares
 app.use(cors());
@@ -28,8 +29,13 @@ app.use('/historia_clinica',historia_clinicaRoute );
 app.listen(process.env.PORT || 8080, () =>{
   console.log('Server on port 8080');
 });
- 
-citaService.correoDeCitasPendientes();
+
+//citaService.correoDeCitasPendientes();
+
+cron.schedule('30 * * * *', () => {
+  citaService.correoDeCitasPendientes();
+});
+
 
 //mail.enviarMail().catch(console.error);
 

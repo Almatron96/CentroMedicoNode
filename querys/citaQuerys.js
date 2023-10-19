@@ -72,7 +72,7 @@ async function listarCitaDelDia(medico_id_usuario) {
 }
 
 //función para obtener los usuarios a los que se debe enviar correo de notificacion
-async function listarCitasPendientes() {
+async function listarCorreoCitasPendientes() {
     try {
         const consulta = `
         SELECT p.primer_nombre as p_primer_nombre, p.primer_apellido as p_primer_apellido, p.correo, 
@@ -150,7 +150,7 @@ module.exports = {
     listarFechas,
     guardarCitas,
     listarCitaDelDia,
-    listarCitasPendientes,
+    listarCorreoCitasPendientes,
     listarCitasPorMedico,
     listarCitasPorCedulaPacienteOMedico
 };

@@ -25,6 +25,7 @@ async function enviarMail() {
 }
 
 async function enviarMailPaciente(datos) {
+  try{
   const info = await transporter.sendMail({
     from: 'cmcarrasco2023@gmail.com',
     to: datos.correo,
@@ -43,29 +44,37 @@ async function enviarMailPaciente(datos) {
     <b>cmcarrasco2023@gmail.com</b>
     </p>`,
   });
-
+} catch (error) {
+  console.error('Error al enviar el correo:', error);
+}
   console.log("Message sent: %s", info.messageId);
 }
 
 async function enviarMailMedico(datos) {
-  const info = await transporter.sendMail({
-    from: 'cmcarrasco2023@gmail.com',
-    to: datos.correo,
-    subject: "Registro exitoso en el sistema del Centro Médico Carrasco.",
-    html: ` <h3>El equipo de Centro Médico Carrasco le da la bienvenida.</h3>
-    <p>
-    Estimado ${datos.primer_nombre} ${datos.primer_apellido}  ${datos.segundo_apellido} le recordamos que sus credenciales de acceso son:
-    <br>
-    Usuario: <b> su correo electrónico.</b>
-    <br>
-    Contraseña: <b>su número de cédula.</b>
-    </p>
-    <p> 
-    Cualquier duda o inconveniente por favor comunicarse al correo:
-    <br>
-    <b>cmcarrasco2023@gmail.com</b>
-    </p>`,
-  });
+  try {
+    const info = await transporter.sendMail({
+      from: 'cmcarrasco2023@gmail.com',
+      to: datos.correo,
+      subject: "Registro exitoso en el sistema del Centro Médico Carrasco.",
+      html: ` <h3>El equipo de Centro Médico Carrasco le da la bienvenida.</h3>
+      <p>
+      Estimado ${datos.primer_nombre} ${datos.primer_apellido}  ${datos.segundo_apellido} le recordamos que sus credenciales de acceso son:
+      <br>
+      Usuario: <b> su correo electrónico.</b>
+      <br>
+      Contraseña: <b>su número de cédula.</b>
+      </p>
+      <p> 
+      Cualquier duda o inconveniente por favor comunicarse al correo:
+      <br>
+      <b>cmcarrasco2023@gmail.com</b>
+      </p>`,
+    });
+
+  } catch (error) {
+     console.error('Error al enviar el correo:', error);
+  }
+  
 
   console.log("Message sent: %s", info.messageId);
 }
@@ -74,6 +83,20 @@ async function enviarMailPendientes(datos) {
 
   for (const fila of datos.rows) {
     try {
+      const fechaInicio = new Date(fila.fecha_inicio); // Convierte la fecha a un objeto Date
+
+      const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        timeZoneName: 'short',
+      };
+      const fechaFormateada = fechaInicio.toLocaleString('es-ES', options);
+
       const info = await transporter.sendMail({
         from: 'cmcarrasco2023@gmail.com',
         to: fila.correo,
@@ -81,7 +104,7 @@ async function enviarMailPendientes(datos) {
         html: `<b>Tiene una cita pendiente en el centro médico Carrasco</b>
               <p>Saludos estimado ${fila.p_primer_nombre} ${fila.p_primer_apellido}. 
               Se le informa que tiene una cita pendiente, con el/la doctor(a) ${fila.m_primer_nombre} ${fila.m_primer_apellido}
-              el día ${fila.fecha_inicio}</p>
+              el día ${fechaFormateada}</p>
         `,
       });
 
