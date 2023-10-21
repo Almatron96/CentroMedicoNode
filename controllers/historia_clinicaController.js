@@ -28,7 +28,34 @@ async function guardar_historia_clinica(req, res) {
     }
   }
 
+  async function listarPacientesCorrespondientesAMedico(req, res) {
+    try {
+      const resultado = await historia_clinicaService.listarPacientesCorrespondientesAMedico(req.body.id_usuario);
+      if (resultado.error) {
+        return res.status(resultado.status).json(resultado.error);
+      }
+      return res.status(200).json(resultado);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json('Error interno del servidor');
+    }
+  }
+  async function listarTodoPacientes(req, res) {
+    try {
+      const resultado = await historia_clinicaService.listarTodoPacientes();
+      if (resultado.error) {
+        return res.status(resultado.status).json(resultado.error);
+      }
+      return res.status(200).json(resultado);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json('Error interno del servidor');
+    }
+  }
+  
 module.exports = {
     guardar_historia_clinica,
-    listarHistoriaClinicaPorMedico
+    listarHistoriaClinicaPorMedico,
+    listarPacientesCorrespondientesAMedico,
+    listarTodoPacientes
   };

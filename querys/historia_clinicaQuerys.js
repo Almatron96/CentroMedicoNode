@@ -30,7 +30,6 @@ async function guardar_historia_clinica(historia) {
 
 async function listarHistoriaClinicaPorMedico(id_medico) {
     try {
-        console.log();
         const consulta = `
         
         SELECT DISTINCT p.cedula, p.primer_nombre, p.primer_apellido, p.segundo_apellido, cm.id_paciente, cm.id_medico, 
@@ -58,7 +57,53 @@ async function listarHistoriaClinicaPorMedico(id_medico) {
     }
 }
 
+
+async function listarPacientesCorrespondientesAMedico(id_medico) {
+    try {
+        const consulta = `
+
+        SELECT HC.ID_HISTORIA_CLINICA, HC.NUMERO_HISTORIA, 
+        P.PRIMER_NOMBRE,P.PRIMER_APELLIDO, P.correo, P.telefono_fijo, P.telefono_movil, P.fecha_nacimiento, P.estado_civil
+               FROM USUARIO U
+               INNER JOIN MEDICO M ON U.ID_USUARIO = M.ID_USUARIO
+               INNER JOIN CITA_MEDICA CM ON CM.ID_MEDICO = M.ID_MEDICO
+               INNER JOIN PACIENTE P ON P.ID_PACIENTE = CM.ID_PACIENTE
+               INNER JOIN HISTORIA_CLINICA HC ON HC.id_cita_medica = CM.id_cita_medica
+               WHERE M.ID_USUARIO = $1
+        `;
+
+        const values = [id_medico]
+        const citas = await pool.query(consulta, values);
+        return citas.rows;
+    } catch (error) {
+        console.error('Error al ejecutar la consulta:', error);
+        throw error;
+    }
+}
+
+async function listarTodoPacientes() {
+    try {
+        const consulta = `
+ SELECT HC.ID_HISTORIA_CLINICA, HC.NUMERO_HISTORIA, 
+ P.PRIMER_NOMBRE,P.PRIMER_APELLIDO, P.correo, P.telefono_fijo, P.telefono_movil, 
+ P.fecha_nacimiento, P.estado_civil, P.cedula
+        FROM USUARIO U
+        INNER JOIN MEDICO M ON U.ID_USUARIO = M.ID_USUARIO
+        INNER JOIN CITA_MEDICA CM ON CM.ID_MEDICO = M.ID_MEDICO
+        INNER JOIN PACIENTE P ON P.ID_PACIENTE = CM.ID_PACIENTE
+		INNER JOIN HISTORIA_CLINICA HC ON HC.id_cita_medica = CM.id_cita_medica
+        `;
+
+        const citas = await pool.query(consulta);
+        return citas.rows;
+    } catch (error) {
+        console.error('Error al ejecutar la consulta:', error);
+        throw error;
+    }
+}
 module.exports = {
     guardar_historia_clinica,
-    listarHistoriaClinicaPorMedico
+    listarHistoriaClinicaPorMedico,
+    listarPacientesCorrespondientesAMedico,
+    listarTodoPacientes
 };

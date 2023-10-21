@@ -68,7 +68,27 @@ async function listarHistoriaClinicaPorMedico(id_medico) {
     }
 }
 
+async function listarPacientesCorrespondientesAMedico(id_usuario) {
+    try {
+     const citas = await historia_clinica_Querys.listarPacientesCorrespondientesAMedico(id_usuario);
+     return citas;
+    } catch (error) {
+        console.error('Error al listar las citas.', error);
+    }
+}
+
+async function listarTodoPacientes() {
+    try {
+     const citas = await historia_clinica_Querys.listarTodoPacientes();
+     return citas;
+    } catch (error) {
+        console.error('Error al listar los pacientes.', error);
+    }
+}
+
 module.exports = {
     guardar_historia_clinica,
-    listarHistoriaClinicaPorMedico
+    listarHistoriaClinicaPorMedico,
+    listarPacientesCorrespondientesAMedico,
+    listarTodoPacientes
 };
