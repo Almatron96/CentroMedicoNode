@@ -101,7 +101,7 @@ async function enviarMailPendientes(datos) {
         from: 'cmcarrasco2023@gmail.com',
         to: fila.correo,
         subject: "Tiene una cita pendiente.",
-        html: `<b>Tiene una cita pendiente en el centro médico Carrasco</b>
+        html: `<b>Tiene una cita pendiente en el Centro Médico Carrasco</b>
               <p>Saludos estimado ${fila.p_primer_nombre} ${fila.p_primer_apellido}. 
               Se le informa que tiene una cita pendiente, con el/la doctor(a) ${fila.m_primer_nombre} ${fila.m_primer_apellido}
               el día ${fechaFormateada}</p>

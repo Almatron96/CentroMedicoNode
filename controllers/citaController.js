@@ -43,6 +43,34 @@ async function listarCitaDelDia(req, res) {
   }
 }
 
+async function listarCitasDelPaciente(req, res) {
+  try {
+    const citas = await citaService.listarCitasDelPaciente(req.body.id_usuario);
+    console.log(citas);
+    if (citas.error) {
+      return res.status(citas.status).json(citas.error);
+    }
+    return res.status(200).json(citas);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json('Error interno del servidor');
+  }
+}
+
+async function listarCitasDelDiaPaciente(req, res) {
+  try {
+    const citasDeldia = await citaService.listarCitasDelDiaPaciente(req.body.id_usuario);
+    console.log(citasDeldia);
+    if (citasDeldia.error) {
+      return res.status(citasDeldia.status).json(citasDeldia.error);
+    }
+    return res.status(200).json(citasDeldia);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json('Error interno del servidor');
+  }
+}
+
 async function listarCitasPorMedico(req, res) {
   try {
     const citas = await citaService.listarCitasPorMedico(req.body.id_usuario);
@@ -74,5 +102,7 @@ module.exports = {
   guardarCitas,
   listarCitaDelDia,
   listarCitasPorMedico,
-  listarCitasPorCedulaPacienteOMedico
+  listarCitasPorCedulaPacienteOMedico,
+  listarCitasDelDiaPaciente,
+  listarCitasDelPaciente
 };

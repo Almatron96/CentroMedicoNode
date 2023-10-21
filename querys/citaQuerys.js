@@ -62,7 +62,52 @@ async function listarCitaDelDia(medico_id_usuario) {
         `;
 
         const values = [medico_id_usuario]
-        const citas = await pool.query(consulta,values);
+        const citas = await pool.query(consulta, values);
+
+        return citas.rows;
+    } catch (error) {
+        console.error('Error al ejecutar la consulta:', error);
+        throw error;
+    }
+}
+
+async function listarCitasDelDiaPaciente(id_usuario) {
+    try {
+        const consulta = `
+        select current_date as fecha, cm.fecha_inicio , cm.especialidad, cm.estado, p.id_usuario,
+        cm.observacion, p.primer_nombre, p.primer_apellido, cm.id_cita_medica
+               from usuario u 
+               inner join medico m ON u.id_usuario = m.id_usuario 
+               inner join cita_medica cm ON cm.id_medico = m.id_medico
+               inner join paciente p on p.id_paciente = cm.id_paciente 
+               where DATE(fecha_inicio) = CURRENT_DATE and p.id_usuario = $1
+        `;
+
+        const values = [id_usuario]
+        const citas = await pool.query(consulta, values);
+
+        return citas.rows;
+    } catch (error) {
+        console.error('Error al ejecutar la consulta:', error);
+        throw error;
+    }
+}
+
+async function listarCitasDelPaciente(id_usuario) {
+    try {
+        const consulta = `
+        SELECT DATE(FECHA_INICIO) AS FECHA,	EXTRACT(HOUR FROM FECHA_INICIO) AS HORA_INICIO,	
+        EXTRACT(HOUR FROM FECHA_FIN) AS HORA_FIN,
+	    M.PRIMER_NOMBRE,M.PRIMER_APELLIDO,CM.ESPECIALIDAD,CM.OBSERVACION
+        FROM USUARIO U
+        INNER JOIN MEDICO M ON U.ID_USUARIO = M.ID_USUARIO
+        INNER JOIN CITA_MEDICA CM ON CM.ID_MEDICO = M.ID_MEDICO
+        INNER JOIN PACIENTE P ON P.ID_PACIENTE = CM.ID_PACIENTE
+        WHERE P.ID_USUARIO = $1
+        `;
+
+        const values = [id_usuario]
+        const citas = await pool.query(consulta, values);
 
         return citas.rows;
     } catch (error) {
@@ -87,9 +132,9 @@ async function listarCorreoCitasPendientes() {
 
         const result = await pool.query(consulta);
 
-       // const fechas = result.rows.map(row => row.fecha);
+        // const fechas = result.rows.map(row => row.fecha);
         console.log(result.rows);
-        
+
         return result;
     } catch (error) {
         console.error('Error al ejecutar la consulta:', error);
@@ -110,7 +155,7 @@ async function listarCitasPorMedico(id_usuario) {
         `;
 
         const values = [id_usuario]
-        const citas = await pool.query(consulta,values);
+        const citas = await pool.query(consulta, values);
 
         return citas.rows;
     } catch (error) {
@@ -136,21 +181,25 @@ async function listarCitasPorCedulaPacienteOMedico(cedula) {
             cedula.cedula_paciente,
             cedula.cedula_medico
         ]
-        const result = await pool.query(consulta,values);
+        const result = await pool.query(consulta, values);
 
         console.log(result.rows);
-        
+
         return result;
     } catch (error) {
         console.error('Error al ejecutar la consulta:', error);
         throw error;
     }
 }
+
+
 module.exports = {
     listarFechas,
     guardarCitas,
     listarCitaDelDia,
     listarCorreoCitasPendientes,
     listarCitasPorMedico,
-    listarCitasPorCedulaPacienteOMedico
+    listarCitasPorCedulaPacienteOMedico,
+    listarCitasDelDiaPaciente,
+    listarCitasDelPaciente
 };

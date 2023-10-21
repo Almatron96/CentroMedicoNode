@@ -43,6 +43,23 @@ async function listarCitaDelDia(id_usuario) {
     }
 }
 
+async function listarCitasDelPaciente(id_usuario) {
+    try {
+     const citas = await citaQuerys.listarCitasDelPaciente(id_usuario);
+     return citas;
+    } catch (error) {
+        console.error('Error al listar las citas.', error);
+    }
+}
+
+async function listarCitasDelDiaPaciente(id_usuario) {
+    try {
+     const citas = await citaQuerys.listarCitasDelDiaPaciente(id_usuario);
+     return citas;
+    } catch (error) {
+        console.error('Error al listar las citas.', error);
+    }
+}
 
 async function correoDeCitasPendientes() {
     try {
@@ -80,5 +97,7 @@ module.exports = {
     listarCitaDelDia,
     correoDeCitasPendientes,
     listarCitasPorMedico,
-    listarCitasPorCedulaPacienteOMedico
+    listarCitasPorCedulaPacienteOMedico,
+    listarCitasDelDiaPaciente,
+    listarCitasDelPaciente
 };
