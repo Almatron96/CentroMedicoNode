@@ -7,6 +7,7 @@ const router = express.Router();
 router.post('/guardar', historia_clinica_Controller.guardar_historia_clinica);
 router.post('/listar_por_medico', historia_clinica_Controller.listarHistoriaClinicaPorMedico);
 router.post('/listar_pacientes_por_medico', historia_clinica_Controller.listarPacientesCorrespondientesAMedico);
+router.post('/listar_historia_paciente', historia_clinica_Controller.listarHistoriaClinicaPorPaciente);
 router.post('/listar_pacientes', historia_clinica_Controller.listarTodoPacientes);
 
 

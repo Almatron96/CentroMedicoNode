@@ -27,6 +27,20 @@ async function guardar_historia_clinica(req, res) {
       return res.status(500).json('Error interno del servidor');
     }
   }
+  
+  async function listarHistoriaClinicaPorPaciente(req, res) {
+    try {
+      console.log("HISTORIA INGRESADA:    " + req.body.id_usuario);
+      const resultado = await historia_clinicaService.listarHistoriaClinicaPorPaciente(req.body.id_usuario);
+      if (resultado.error) {
+        return res.status(resultado.status).json(resultado.error);
+      }
+      return res.status(200).json(resultado);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json('Error interno del servidor');
+    }
+  }
 
   async function listarPacientesCorrespondientesAMedico(req, res) {
     try {
@@ -40,6 +54,7 @@ async function guardar_historia_clinica(req, res) {
       return res.status(500).json('Error interno del servidor');
     }
   }
+
   async function listarTodoPacientes(req, res) {
     try {
       const resultado = await historia_clinicaService.listarTodoPacientes();
@@ -57,5 +72,6 @@ module.exports = {
     guardar_historia_clinica,
     listarHistoriaClinicaPorMedico,
     listarPacientesCorrespondientesAMedico,
-    listarTodoPacientes
+    listarTodoPacientes,
+    listarHistoriaClinicaPorPaciente
   };

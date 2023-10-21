@@ -77,6 +77,15 @@ async function listarPacientesCorrespondientesAMedico(id_usuario) {
     }
 }
 
+async function listarHistoriaClinicaPorPaciente(id_usuario) {
+    try {
+     const citas = await historia_clinica_Querys.listarHistoriaClinicaPorPaciente(id_usuario);
+     return citas;
+    } catch (error) {
+        console.error('Error al listar las citas.', error);
+    }
+}
+
 async function listarTodoPacientes() {
     try {
      const citas = await historia_clinica_Querys.listarTodoPacientes();
@@ -90,5 +99,6 @@ module.exports = {
     guardar_historia_clinica,
     listarHistoriaClinicaPorMedico,
     listarPacientesCorrespondientesAMedico,
-    listarTodoPacientes
+    listarTodoPacientes,
+    listarHistoriaClinicaPorPaciente
 };
