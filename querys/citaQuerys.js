@@ -104,6 +104,7 @@ async function listarCitasDelPaciente(id_usuario) {
         INNER JOIN CITA_MEDICA CM ON CM.ID_MEDICO = M.ID_MEDICO
         INNER JOIN PACIENTE P ON P.ID_PACIENTE = CM.ID_PACIENTE
         WHERE P.ID_USUARIO = $1
+        ORDER BY fecha DESC 
         `;
 
         const values = [id_usuario]
