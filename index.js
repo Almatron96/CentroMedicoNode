@@ -30,8 +30,9 @@ app.listen(process.env.PORT || 8080, () =>{
   console.log('Server on port 8080');
 });
 
-//citaService.correoDeCitasPendientes();
 
+
+//cronometro para envío de notificaciones a correo
 cron.schedule('30 * * * *', () => {
   citaService.correoDeCitasPendientes();
 });

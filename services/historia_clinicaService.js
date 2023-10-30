@@ -15,13 +15,13 @@ async function guardar_historia_clinica(historia) {
         const tratamientoGuardado = await tratamientoService.guardar_tratamiento(nuevoTratamiento);
         console.log("Datos del tratamiento" + tratamientoGuardado);
 
-
         const nuevoAntecedente = {
             antecedente_alergico: historia.antecedente.antecedente_alergico,
             antecedente_familiar: historia.antecedente.antecedente_familiar,
             antecedente_personal: historia.antecedente.antecedente_personal,
             antecedente_quirurgico: historia.antecedente.antecedente_quirurgico,
         };
+        
         const antecedenteGuardado = await antecedenteService.guardar_antecedente(nuevoAntecedente);
 
         const nuevoExamenFisico = {

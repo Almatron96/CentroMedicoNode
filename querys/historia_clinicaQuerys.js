@@ -19,7 +19,6 @@ async function guardar_historia_clinica(historia) {
         ];
 
         const result = await pool.query(consulta, values);
-
         return result;
 
     } catch (error) {
@@ -112,14 +111,20 @@ async function listarPacientesCorrespondientesAMedico(id_medico) {
 async function listarTodoPacientes() {
     try {
         const consulta = `
- SELECT HC.ID_HISTORIA_CLINICA, HC.NUMERO_HISTORIA, 
- P.PRIMER_NOMBRE,P.PRIMER_APELLIDO, P.correo, P.telefono_fijo, P.telefono_movil, 
- P.fecha_nacimiento, P.estado_civil, P.cedula
+        SELECT HC.ID_HISTORIA_CLINICA, HC.NUMERO_HISTORIA, HC.diagnostico, HC.evolucion, HC.motivo_consulta,
+        P.PRIMER_NOMBRE,P.PRIMER_APELLIDO, P.correo, P.telefono_fijo, P.telefono_movil, 
+        P.fecha_nacimiento, P.estado_civil, P.cedula,
+		a.antecedente_alergico, a.antecedente_familiar, a.antecedente_personal, a.antecedente_quirurgico,
+        ef.estatura, ef.frecuencia_respiratoria, ef.peso, ef.pulso,ef.presion_arterial, ef.tipo_sanguineo, ef.temperatura,
+        t.indicaciones, t.duracion, t.medicacion
         FROM USUARIO U
         INNER JOIN MEDICO M ON U.ID_USUARIO = M.ID_USUARIO
         INNER JOIN CITA_MEDICA CM ON CM.ID_MEDICO = M.ID_MEDICO
         INNER JOIN PACIENTE P ON P.ID_PACIENTE = CM.ID_PACIENTE
 		INNER JOIN HISTORIA_CLINICA HC ON HC.id_cita_medica = CM.id_cita_medica
+		INNER JOIN ANTECEDENTE A ON A.id_antecedente = HC.id_antecedente
+		INNER JOIN examen_fisico EF ON EF.id_examen_fisico = HC.id_examen_fisico
+		INNER JOIN TRATAMIENTO T ON T.id_tratamiento = HC.id_tratamiento
         `;
 
         const citas = await pool.query(consulta);
