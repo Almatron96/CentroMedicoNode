@@ -45,7 +45,7 @@ async function actualizarMedico(medico) {
     fecha_nacimiento = $8,
     estado_civil = $9,
     especialidad = $10,
-    licencia = $11,
+    licencia = $11
     WHERE cedula = $12;
     `;
 
