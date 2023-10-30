@@ -59,6 +59,31 @@ async function guardarPaciente(paciente) {
     }
 }
 
+async function actualizarPaciente(paciente) {
+    try {
+        const nuevoPaciente = {
+            primer_nombre: paciente.primer_nombre,
+            segundo_nombre: paciente.segundo_nombre,
+            primer_apellido: paciente.primer_apellido,
+            segundo_apellido: paciente.segundo_apellido,
+            correo: paciente.correo,
+            telefono_movil: paciente.telefono_movil,
+            telefono_fijo: paciente.telefono_fijo,
+            fecha_nacimiento: paciente.fecha_nacimiento,
+            estado_civil: paciente.estado_civil,
+            cedula: paciente.cedula
+        };
+
+        console.log(nuevoPaciente);
+        await pacienteQuerys.actualizarPaciente(nuevoPaciente);
+
+
+        return 'Pacientge actualizado correctamente.';
+    } catch (error) {
+        throw new Error('Error al guardar el paciente en la base de datos');
+    }
+}
+
 async function listarPaciente() {
     try {
      const pacientes = await pacienteQuerys.listarPaciente();
@@ -72,5 +97,6 @@ async function listarPaciente() {
 
 module.exports = {
     guardarPaciente,
-    listarPaciente
+    listarPaciente,
+    actualizarPaciente
 };

@@ -28,6 +28,46 @@ async function guardarPaciente(paciente) {
     throw error;
   }
 }
+
+async function actualizarPaciente(paciente) {
+  try {
+    const query = `UPDATE paciente
+    SET 
+        primer_nombre = $1,
+        segundo_nombre = $2,
+        primer_apellido = $3,
+        segundo_apellido = $4,
+        correo = $6,
+        telefono_movil = $7,
+        telefono_fijo = $8,
+        fecha_nacimiento = $9,
+        estado_civil = $10
+    WHERE cedula = $5;
+    
+      `;
+
+    const values = [
+      paciente.primer_nombre,
+      paciente.segundo_nombre,
+      paciente.primer_apellido,
+      paciente.segundo_apellido,
+      paciente.cedula,
+      paciente.correo,
+      paciente.telefono_movil,
+      paciente.telefono_fijo,
+      paciente.fecha_nacimiento,
+      paciente.estado_civil,
+    ];
+
+    const result = await pool.query(query, values);
+    // console.log(result.rows);
+    return result.rows[0];
+  } catch (error) {
+    console.error('Error al consultar la base de datos:', error);
+    throw error;
+  }
+}
+
 async function listarPaciente() {
   const query = 'select * from paciente';
   try {
@@ -41,5 +81,6 @@ async function listarPaciente() {
 
 module.exports = {
   guardarPaciente,
-  listarPaciente
+  listarPaciente,
+  actualizarPaciente
 };
