@@ -60,6 +60,34 @@ async function guardarMedico(medico) {
     }
 }
 
+async function actualizarMedico(medico) {
+    try {
+        const nuevoMedico = {
+            primer_nombre: medico.primer_nombre,
+            segundo_nombre: medico.segundo_nombre,
+            primer_apellido: medico.primer_apellido,
+            segundo_apellido: medico.segundo_apellido,
+            correo: medico.correo,
+            telefono_movil: medico.telefono_movil,
+            telefono_fijo: medico.telefono_fijo,
+            fecha_nacimiento: medico.fecha_nacimiento,
+            estado_civil: medico.estado_civil,
+            especialidad: medico.especialidad,
+            licencia: medico.licencia,
+            cedula: medico.cedula
+        };
+
+        console.log(nuevoMedico);
+        // Guardar el nuevo medico en la base de datos
+        await medicoQuerys.actualizarMedico(nuevoMedico);
+
+
+        return 'Médico actualizado correctamente.';
+    } catch (error) {
+        throw new Error('Error al guardar el medico en la base de datos');
+    }
+}
+
 async function listarMedico() {
     try {
      const medicos = await medicoQuerys.listarMedico();
@@ -73,5 +101,6 @@ async function listarMedico() {
 
 module.exports = {
     guardarMedico,
-    listarMedico
+    listarMedico,
+    actualizarMedico
 };
