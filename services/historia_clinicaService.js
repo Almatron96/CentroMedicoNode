@@ -2,7 +2,8 @@ const historia_clinica_Querys = require('../querys/historia_clinicaQuerys');
 const antecedenteService = require('./antecedenteService');
 const examen_fisicoService = require('./examen_fisicoService');
 const tratamientoService = require('./tratamientoService');
-
+const tratamientoQuery = require('../querys/tratamientoQuerys');
+const examenFisicoQuery = require('../querys/examen_fisicoQuerys');
 
 async function guardar_historia_clinica(historia) {
     try {
@@ -67,13 +68,36 @@ async function actualizarTratamiento(tratamiento) {
             medicacion: tratamiento.medicacion,
             id_tratamiento: tratamiento.id_tratamiento,
         };
-        await historia_clinica_Querys.actualizarTratamiento(nuevoTratamiento);
+
+        await tratamientoQuery.actualizarTratamiento(nuevoTratamiento);
 
         return 'Tratamiento actualizado correctamente.';
     } catch (error) {
         throw new Error('Error al guardar el paciente en la base de datos');
     }
 }
+
+async function actualizarExamenFisico(examen_fisico) {
+    try {
+        const nuevoExamen_fisico = {
+           estatura: examen_fisico.estatura,
+           frecuencia_respiratoria: examen_fisico.frecuencia_respiratoria,
+           peso: examen_fisico.peso,
+           presion_arterial: examen_fisico.presion_arterial,
+           pulso: examen_fisico.pulso,
+           temperatura: examen_fisico.temperatura,
+           tipo_sanguineo:  examen_fisico.tipo_sanguineo,
+           id_examen_fisico: examen_fisico.id_examen_fisico
+        };
+        
+        await examenFisicoQuery.actualizarExamenFisico(nuevoExamen_fisico);
+
+        return 'Exámen físico actualizado correctamente.';
+    } catch (error) {
+        throw new Error('Error al guardar el paciente en la base de datos');
+    }
+}
+
 async function listarHistoriaClinicaPorMedico(id_medico) {
     try {
      const citas = await historia_clinica_Querys.listarHistoriaClinicaPorMedico(id_medico);
@@ -116,5 +140,6 @@ module.exports = {
     listarPacientesCorrespondientesAMedico,
     listarTodoPacientes,
     listarHistoriaClinicaPorPaciente,
-    actualizarTratamiento
+    actualizarTratamiento,
+    actualizarExamenFisico
 };

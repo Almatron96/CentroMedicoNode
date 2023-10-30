@@ -27,6 +27,19 @@ async function guardar_historia_clinica(req, res) {
     }
   }
 
+  async function actualizarExamenFisico(req, res) {
+    try {
+      const resultado = await historia_clinicaService.actualizarExamenFisico(req.body);
+      if (resultado.error) {
+        return res.status(resultado.status).json(resultado.error);
+      }
+      return res.status(200).json("Exámen físico actualizado correctamente.");
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json('Error interno del servidor');
+    }
+  }
+
   async function listarHistoriaClinicaPorMedico(req, res) {
     try {
       console.log("HISTORIA INGRESADA:    " + req.body.id_medico);
@@ -87,5 +100,6 @@ module.exports = {
     listarPacientesCorrespondientesAMedico,
     listarTodoPacientes,
     listarHistoriaClinicaPorPaciente,
-    actualizarTratamiento
+    actualizarTratamiento,
+    actualizarExamenFisico
   };
