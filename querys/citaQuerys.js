@@ -46,6 +46,40 @@ async function guardarCitas(cita) {
     }
 }
 
+async function actualizarCita(cita) {
+    try {
+        const consulta = `
+        
+        UPDATE cita_medica
+        SET  especialidad = $1, 
+        estado = $2, 
+        fecha_fin = $3, 
+        fecha_inicio = $4, 
+        observacion =$5, 
+        id_medico = $6, 
+        id_paciente = $7
+        where id_cita_medica= $8
+
+        `;
+        const values = [
+            cita.especialidad,
+            cita.estado,
+            cita.fecha_fin,
+            cita.fecha_inicio,
+            cita.observacion,
+            cita.id_medico,
+            cita.id_paciente,
+            cita.id_cita_medica
+        ];
+        const result = await pool.query(consulta, values);
+
+        return result;
+
+    } catch (error) {
+        console.error('Error al ejecutar la consulta:', error);
+        throw error;
+    }
+}
 
 async function listarCitaDelDia(medico_id_usuario) {
     try {
@@ -203,5 +237,6 @@ module.exports = {
     listarCitasPorMedico,
     listarCitasPorCedulaPacienteOMedico,
     listarCitasDelDiaPaciente,
-    listarCitasDelPaciente
+    listarCitasDelPaciente,
+    actualizarCita
 };

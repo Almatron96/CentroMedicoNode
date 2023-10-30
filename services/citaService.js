@@ -34,6 +34,31 @@ async function guardarCitas(cita) {
         throw new Error(error);
     }
 }
+
+async function actualizarCita(cita) {
+    try {
+        const nuevaCita = {
+            especialidad: cita.especialidad,
+            estado: cita.estado,
+            fecha_fin: cita.fecha_fin,
+            fecha_inicio: cita.fecha_inicio,
+            observacion: cita.observacion,
+            id_medico: cita.medico.id_medico,
+            id_paciente: cita.paciente.id_paciente,
+            id_cita_medica: cita.id_cita_medica
+        };
+
+        const resultado = await citaQuerys.actualizarCita(nuevaCita);
+
+        return resultado;
+    } catch (error) {
+
+        console.error('Error al actualizar cita.', error);
+        throw new Error(error);
+    }
+}
+
+
 async function listarCitaDelDia(id_usuario) {
     try {
      const citas = await citaQuerys.listarCitaDelDia(id_usuario);
@@ -99,5 +124,6 @@ module.exports = {
     listarCitasPorMedico,
     listarCitasPorCedulaPacienteOMedico,
     listarCitasDelDiaPaciente,
-    listarCitasDelPaciente
+    listarCitasDelPaciente,
+    actualizarCita
 };
