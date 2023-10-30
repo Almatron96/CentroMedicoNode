@@ -203,7 +203,7 @@ async function listarCitasPorMedico(id_usuario) {
 async function listarCitasPorCedulaPacienteOMedico(cedula) {
     try {
         const consulta = `
-        select current_date as fecha,  cm.especialidad, cm.estado, extract(hour from  fecha_inicio) as hora_inicio, 
+        select fecha_inicio as fecha,  cm.especialidad, cm.estado, extract(hour from  fecha_inicio) as hora_inicio, 
         extract(hour from  fecha_fin) as hora_fin,  cm.observacion, p.primer_nombre, p.primer_apellido, cm.id_cita_medica,
 		p.id_paciente, m.id_medico
         from usuario u 
