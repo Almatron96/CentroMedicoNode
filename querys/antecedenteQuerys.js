@@ -24,7 +24,37 @@ async function guardar_antecedente(antecedente) {
   }
 }
 
+async function actualizarAntecedente(antecedente) {
+  try {
+    const query = `
+    UPDATE  antecedente
+    SET 
+      antecedente_alergico =$1,
+      antecedente_familiar = $2,
+      antecedente_personal = $3,
+      antecedente_quirurgico = $4
+      where id_antecedente = $5
+    `;
+    const values = [
+      antecedente.antecedente_alergico,
+      antecedente.antecedente_familiar,
+      antecedente.antecedente_personal,
+      antecedente.antecedente_quirurgico,
+      antecedente.id_antecedente
+    ];
+
+    const result = await pool.query(query, values);
+
+    return result.rows[0]; 
+
+  } catch (error) {
+    console.error('Error al consultar la base de datos:', error);
+    throw error;
+  }
+}
+
 module.exports = {
-  guardar_antecedente
+  guardar_antecedente,
+  actualizarAntecedente
 };
 

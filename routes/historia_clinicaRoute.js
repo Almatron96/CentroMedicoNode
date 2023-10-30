@@ -11,6 +11,6 @@ router.post('/listar_historia_paciente', historia_clinica_Controller.listarHisto
 router.post('/listar_pacientes', historia_clinica_Controller.listarTodoPacientes);
 router.post('/actualizar_tratamiento', historia_clinica_Controller.actualizarTratamiento);
 router.post('/actualizar_examen_fisico', historia_clinica_Controller.actualizarExamenFisico);
-
+router.post('/actualizar_antecedente', historia_clinica_Controller.actualizarAntecedente);
 
 module.exports = router;

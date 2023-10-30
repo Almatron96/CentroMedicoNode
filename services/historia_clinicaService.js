@@ -4,6 +4,7 @@ const examen_fisicoService = require('./examen_fisicoService');
 const tratamientoService = require('./tratamientoService');
 const tratamientoQuery = require('../querys/tratamientoQuerys');
 const examenFisicoQuery = require('../querys/examen_fisicoQuerys');
+const antecedenteQuery = require('../querys/antecedenteQuerys');
 
 async function guardar_historia_clinica(historia) {
     try {
@@ -98,6 +99,24 @@ async function actualizarExamenFisico(examen_fisico) {
     }
 }
 
+async function actualizarAntecedente(antecedente) {
+    try {
+        const nuevoAntecedente = {
+    antecedente_alergico:antecedente.antecedente_alergico,
+    antecedente_familiar:antecedente.antecedente_familiar,
+    antecedente_personal:antecedente.antecedente_personal,
+    antecedente_quirurgico:antecedente.antecedente_quirurgico,
+    id_antecedente: antecedente.id_antecedente
+        };
+        
+        await antecedenteQuery.actualizarAntecedente(nuevoAntecedente);
+
+        return 'Exámen físico actualizado correctamente.';
+    } catch (error) {
+        throw new Error('Error al guardar el paciente en la base de datos');
+    }
+}
+
 async function listarHistoriaClinicaPorMedico(id_medico) {
     try {
      const citas = await historia_clinica_Querys.listarHistoriaClinicaPorMedico(id_medico);
@@ -141,5 +160,6 @@ module.exports = {
     listarTodoPacientes,
     listarHistoriaClinicaPorPaciente,
     actualizarTratamiento,
-    actualizarExamenFisico
+    actualizarExamenFisico,
+    actualizarAntecedente
 };

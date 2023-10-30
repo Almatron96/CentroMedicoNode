@@ -42,7 +42,6 @@ async function guardar_examen_fisico(examen_fisico) {
         `;
         const values = [
           examen_fisico.estatura,
-
           examen_fisico.frecuencia_respiratoria,
           examen_fisico.peso,
           examen_fisico.presion_arterial,
