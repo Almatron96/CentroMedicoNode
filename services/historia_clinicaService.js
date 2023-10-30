@@ -59,6 +59,21 @@ async function guardar_historia_clinica(historia) {
     }
 }
 
+async function actualizarTratamiento(tratamiento) {
+    try {
+        const nuevoTratamiento = {
+            duracion: tratamiento.duracion,
+            indicaciones: tratamiento.indicaciones,
+            medicacion: tratamiento.medicacion,
+            id_tratamiento: tratamiento.id_tratamiento,
+        };
+        await historia_clinica_Querys.actualizarTratamiento(nuevoTratamiento);
+
+        return 'Tratamiento actualizado correctamente.';
+    } catch (error) {
+        throw new Error('Error al guardar el paciente en la base de datos');
+    }
+}
 async function listarHistoriaClinicaPorMedico(id_medico) {
     try {
      const citas = await historia_clinica_Querys.listarHistoriaClinicaPorMedico(id_medico);
@@ -100,5 +115,6 @@ module.exports = {
     listarHistoriaClinicaPorMedico,
     listarPacientesCorrespondientesAMedico,
     listarTodoPacientes,
-    listarHistoriaClinicaPorPaciente
+    listarHistoriaClinicaPorPaciente,
+    actualizarTratamiento
 };

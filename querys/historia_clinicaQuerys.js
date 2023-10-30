@@ -26,6 +26,32 @@ async function guardar_historia_clinica(historia) {
         throw error;
     }
 }
+async function actualizarTratamiento(tratamiento) {
+    try {
+        const consulta = `
+        UPDATE tratamiento
+        SET
+            duracion = $1,
+            indicaciones = $2,
+            medicacion = $3
+        WHERE id_tratamiento = $4
+        `;
+        const values = [
+            tratamiento.duracion,
+            tratamiento.indicaciones,
+            tratamiento.medicacion,
+            tratamiento.id_tratamiento,
+        ];
+
+        const result = await pool.query(consulta, values);
+        return result;
+
+    } catch (error) {
+        console.error('Error al ejecutar la consulta:', error);
+        throw error;
+    }
+}
+
 
 async function listarHistoriaClinicaPorMedico(id_medico) {
     try {
@@ -33,9 +59,9 @@ async function listarHistoriaClinicaPorMedico(id_medico) {
         
         SELECT DISTINCT p.cedula, p.primer_nombre, p.primer_apellido, p.segundo_apellido, cm.id_paciente, cm.id_medico, 
 		hc.numero_historia, hc.diagnostico, hc.evolucion, hc.motivo_consulta,
-        a.antecedente_alergico, a.antecedente_familiar, a.antecedente_personal, a.antecedente_quirurgico,
-        ef.estatura, ef.frecuencia_respiratoria, ef.peso, ef.pulso,ef.presion_arterial, ef.tipo_sanguineo, ef.temperatura,
-        t.indicaciones, t.duracion, t.medicacion
+        a.id_antecedente, a.antecedente_alergico, a.antecedente_familiar, a.antecedente_personal, a.antecedente_quirurgico,
+        ef.id_examen_fisico, ef.estatura, ef.frecuencia_respiratoria, ef.peso, ef.pulso,ef.presion_arterial, ef.tipo_sanguineo, ef.temperatura,
+        t.id_tratamiento, t.indicaciones, t.duracion, t.medicacion
         FROM medico m 
         INNER JOIN usuario u ON m.id_usuario = u.id_usuario
         INNER JOIN cita_medica cm ON cm.id_medico = m.id_medico
@@ -134,10 +160,13 @@ async function listarTodoPacientes() {
         throw error;
     }
 }
+
+
 module.exports = {
     guardar_historia_clinica,
     listarHistoriaClinicaPorMedico,
     listarPacientesCorrespondientesAMedico,
     listarTodoPacientes,
-    listarHistoriaClinicaPorPaciente
+    listarHistoriaClinicaPorPaciente,
+    actualizarTratamiento
 };
