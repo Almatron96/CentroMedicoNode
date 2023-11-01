@@ -68,6 +68,7 @@ async function actualizarPaciente(paciente) {
   }
 }
 
+
 async function listarPaciente() {
   const query = 'select * from paciente';
   try {
@@ -82,5 +83,5 @@ async function listarPaciente() {
 module.exports = {
   guardarPaciente,
   listarPaciente,
-  actualizarPaciente
+  actualizarPaciente,
 };

@@ -60,6 +60,22 @@ async function guardar_historia_clinica(historia) {
         throw new Error('Error al guardar historia clínica en la base de datos');
     }
 }
+async function actualizarHistoria(historia) {
+    try {
+        const nuevaHistoria = {
+            diagnostico: historia.diagnostico,
+            evolucion: historia.evolucion,
+            motivo_consulta: historia.motivo_consulta,
+            id_historia_clinica: historia.id_historia_clinica
+        };
+
+        await historia_clinica_Querys.actualizarHistoria(nuevaHistoria);
+
+        return 'Tratamiento actualizado correctamente.';
+    } catch (error) {
+        throw new Error('Error al guardar el paciente en la base de datos');
+    }
+}
 
 async function actualizarTratamiento(tratamiento) {
     try {
@@ -161,5 +177,6 @@ module.exports = {
     listarHistoriaClinicaPorPaciente,
     actualizarTratamiento,
     actualizarExamenFisico,
-    actualizarAntecedente
+    actualizarAntecedente,
+    actualizarHistoria
 };

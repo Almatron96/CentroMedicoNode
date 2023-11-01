@@ -85,10 +85,10 @@ CREATE TABLE IF NOT EXISTS paciente
     telefono_movil character varying(255)  ,
     id_usuario bigint,
     CONSTRAINT paciente_pkey PRIMARY KEY (id_paciente),
-    CONSTRAINT uk_fkia3okytet08hwlgoj025ocp UNIQUE (correo)
+    CONSTRAINT correo_uk UNIQUE (correo)
 );
 
-CREATE TABLE IF NOT EXISTS recaudacion
+/* CREATE TABLE IF NOT EXISTS recaudacion
 (
     id_recaudacion SERIAL,
     apellido character varying(255)  ,
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS recaudacion
     nombre character varying(255)  ,
     numero_comprobante bigint,
     CONSTRAINT recaudacion_pkey PRIMARY KEY (id_recaudacion)
-);
+); */
 
 CREATE TABLE IF NOT EXISTS secretaria
 (
@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS secretaria
     telefono_movil character varying(255)  ,
     id_usuario bigint,
     CONSTRAINT secretaria_pkey PRIMARY KEY (id_secretaria),
-    CONSTRAINT uk_dkip7ttiv0gjy4t8ygvqy5t7e UNIQUE (correo)
+    CONSTRAINT secretaria_uk UNIQUE (correo)
 );
 
 CREATE TABLE IF NOT EXISTS tratamiento
@@ -140,63 +140,63 @@ CREATE TABLE IF NOT EXISTS usuario
 );
 
 ALTER TABLE IF EXISTS cita_medica
-    ADD CONSTRAINT fk8gcia373pwl3lc5qvlclwfg46 FOREIGN KEY (id_paciente)
+    ADD CONSTRAINT cita_medica_paciente_fk FOREIGN KEY (id_paciente)
     REFERENCES  paciente (id_paciente) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
+    ON DELETE CASCADE;
 
 
 ALTER TABLE IF EXISTS cita_medica
-    ADD CONSTRAINT fkkn6lchcxpk6khkhbhns3p3q7e FOREIGN KEY (id_medico)
+    ADD CONSTRAINT cita_medica_medico_fk FOREIGN KEY (id_medico)
     REFERENCES  medico (id_medico) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
+    ON DELETE CASCADE;
 
 
 ALTER TABLE IF EXISTS historia_clinica
-    ADD CONSTRAINT fk10wimphlgergokd8sgupwpptp FOREIGN KEY (id_cita_medica)
+    ADD CONSTRAINT historia_clinica_cita_medica_fk FOREIGN KEY (id_cita_medica)
     REFERENCES  cita_medica (id_cita_medica) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
+    ON DELETE CASCADE;
 
 
 ALTER TABLE IF EXISTS historia_clinica
-    ADD CONSTRAINT fk8q5hofednljy9twx4sdhlih0m FOREIGN KEY (id_antecedente)
+    ADD CONSTRAINT historia_clinica_antecedente_fk FOREIGN KEY (id_antecedente)
     REFERENCES  antecedente (id_antecedente) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION;
 
 
 ALTER TABLE IF EXISTS historia_clinica
-    ADD CONSTRAINT fk9rsschs03m8ctvw17pqk2gvlu FOREIGN KEY (id_examen_fisico)
+    ADD CONSTRAINT historia_clinica_examen_fisico_fk FOREIGN KEY (id_examen_fisico)
     REFERENCES  examen_fisico (id_examen_fisico) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION;
 
 
 ALTER TABLE IF EXISTS historia_clinica
-    ADD CONSTRAINT fkcfqttyuwmf0i0re6q05su97jn FOREIGN KEY (id_tratamiento)
+    ADD CONSTRAINT historia_clinica_tratamiento_fk FOREIGN KEY (id_tratamiento)
     REFERENCES  tratamiento (id_tratamiento) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
+    ON DELETE CASCADE;
 
 
 ALTER TABLE IF EXISTS medico
-    ADD CONSTRAINT fk88ukndsp99d9kgb7kg5oj0v22 FOREIGN KEY (id_usuario)
+    ADD CONSTRAINT medico_usuario_fk FOREIGN KEY (id_usuario)
     REFERENCES  usuario (id_usuario) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
+    ON DELETE CASCADE;
 
 
 ALTER TABLE IF EXISTS paciente
-    ADD CONSTRAINT fk1vx4fcl7eb0wbyvff1184dr0m FOREIGN KEY (id_usuario)
+    ADD CONSTRAINT paciente_usuario_fk FOREIGN KEY (id_usuario)
     REFERENCES usuario (id_usuario) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
+    ON DELETE CASCADE;
 
 
 ALTER TABLE IF EXISTS secretaria
-    ADD CONSTRAINT fkpk3e7yahwqjlytp9w1evenc6p FOREIGN KEY (id_usuario)
+    ADD CONSTRAINT secretaria_usuario_fk FOREIGN KEY (id_usuario)
     REFERENCES  usuario (id_usuario) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION;

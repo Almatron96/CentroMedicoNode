@@ -1,5 +1,3 @@
-const express = require('express');
-const router = express.Router();
 const pacienteService = require('../services/pacienteService');
 
 
@@ -65,5 +63,5 @@ async function listarPaciente(req, res) {
 module.exports = {
   guardarPaciente,
   listarPaciente,
-  actualizarPaciente
+  actualizarPaciente,
 };

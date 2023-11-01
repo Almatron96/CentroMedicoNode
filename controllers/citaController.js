@@ -56,6 +56,21 @@ async function listarCitaDelDia(req, res) {
   }
 }
 
+async function eliminarCita(req, res) {
+  try {
+    const cita = req.body;
+    const resultado = await citaService.eliminarCita(cita);
+    
+    if (resultado.error) {
+      return res.status(resultado.status).json(resultado.error);
+    }
+    return res.status(200).json("Cita eliminada correctamente.");
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json('Error interno del servidor');
+  }
+}
+
 async function listarCitasDelPaciente(req, res) {
   try {
     const citas = await citaService.listarCitasDelPaciente(req.body.id_usuario);
@@ -118,5 +133,6 @@ module.exports = {
   listarCitasPorCedulaPacienteOMedico,
   listarCitasDelDiaPaciente,
   listarCitasDelPaciente,
-  actualizarCita
+  actualizarCita,
+  eliminarCita
 };

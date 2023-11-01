@@ -1,9 +1,8 @@
 const express = require('express');
-const loginController = require('../controllers/usuarioController');
+const usuarioController = require('../controllers/usuarioController');
 
 const router = express.Router();
 
-// Ruta para iniciar sesión
-router.post('/guardarUsuario', usuarioController.guardarUsuario);
+router.post('/eliminar', usuarioController.eliminarUsuario);
 
 module.exports = router;

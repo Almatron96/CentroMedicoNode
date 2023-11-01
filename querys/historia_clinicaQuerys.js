@@ -27,6 +27,32 @@ async function guardar_historia_clinica(historia) {
     }
 }
 
+async function actualizarHistoria(historia) {
+    try {
+        const consulta = `
+        UPDATE historia_clinica
+        SET 
+        diagnostico = $1, 
+        evolucion = $2, 
+        motivo_consulta = $3, 
+        where id_historia_clinica = $4
+        `;
+        const values = [
+            historia.diagnostico,
+            historia.evolucion,
+            historia.motivo_consulta,
+            historia.id_historia_clinica
+        ];
+
+        const result = await pool.query(consulta, values);
+        return result;
+
+    } catch (error) {
+        console.error('Error al ejecutar la consulta:', error);
+        throw error;
+    }
+}
+
 async function listarHistoriaClinicaPorMedico(id_medico) {
     try {
         const consulta = `
@@ -142,4 +168,5 @@ module.exports = {
     listarPacientesCorrespondientesAMedico,
     listarTodoPacientes,
     listarHistoriaClinicaPorPaciente,
+    actualizarHistoria
 };

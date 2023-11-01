@@ -34,10 +34,27 @@ async function guardarUsuario(usuario) {
   }
 }
 
+async function eliminarUsuario(usuario) {
+  try {
+    const query = `
+    DELETE FROM usuario
+    WHERE id_usuario = $1
+    `;
 
+    const values = [
+      usuario.id_usuario
+    ];
+    const result = await pool.query(query, values);
+    return result.rows[0];
+  } catch (error) {
+    console.error('Error al consultar la base de datos:', error);
+    throw error;
+  }
+}
 
 module.exports = {
   obtenerUsuarioPorCorreo, 
-  guardarUsuario // exportamos la función
+  guardarUsuario,
+  eliminarUsuario
 };
 

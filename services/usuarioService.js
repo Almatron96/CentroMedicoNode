@@ -25,6 +25,19 @@ async function guardarUsuario(usuario) {
   }
 }
 
+async function eliminarUsuario(usuario) {
+  try {
+      const usuarioEliminado = {
+          id_usuario: usuario.id_usuario,
+      };
+      await usuarioQuerys.eliminarUsuario(usuarioEliminado);
+      return 'Paciente eliminado correctamente.';
+  } catch (error) {
+      throw new Error('Error al elimminar paciente en la base de datos');
+  }
+}
+
 module.exports = {
   guardarUsuario,
+  eliminarUsuario
 };

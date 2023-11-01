@@ -81,6 +81,24 @@ async function actualizarCita(cita) {
     }
 }
 
+async function eliminarCita(cita) {
+    try {
+      const query = `
+      DELETE FROM cita_medica
+      WHERE id_cita_medica = $1
+      `;
+  
+      const values = [
+        cita.id_cita_medica
+      ];
+      const result = await pool.query(query, values);
+      return result.rows[0];
+    } catch (error) {
+      console.error('Error al consultar la base de datos:', error);
+      throw error;
+    }
+  }
+
 async function listarCitaDelDia(medico_id_usuario) {
     try {
         const consulta = `
@@ -238,5 +256,6 @@ module.exports = {
     listarCitasPorCedulaPacienteOMedico,
     listarCitasDelDiaPaciente,
     listarCitasDelPaciente,
-    actualizarCita
+    actualizarCita,
+    eliminarCita
 };

@@ -25,12 +25,12 @@ async function enviarMail() {
 }
 
 async function enviarMailPaciente(datos) {
-  try{
-  const info = await transporter.sendMail({
-    from: 'cmcarrasco2023@gmail.com',
-    to: datos.correo,
-    subject: "Registro exitoso en el sistema del Centro Médico Carrasco.",
-    html: ` <h3>El equipo de Centro Médico Carrasco le da la bienvenida.</h3>
+  try {
+    const info = await transporter.sendMail({
+      from: 'cmcarrasco2023@gmail.com',
+      to: datos.correo,
+      subject: "Registro exitoso en el sistema del Centro Médico Carrasco.",
+      html: ` <h3>El equipo de Centro Médico Carrasco le da la bienvenida.</h3>
     <p>
     Estimado ${datos.primer_nombre} ${datos.primer_apellido}  ${datos.segundo_apellido} le recordamos que sus credenciales de acceso son:
     <br>
@@ -43,11 +43,11 @@ async function enviarMailPaciente(datos) {
     <br>
     <b>cmcarrasco2023@gmail.com</b>
     </p>`,
-  });
-} catch (error) {
-  console.error('Error al enviar el correo:', error);
-}
-  console.log("Message sent: %s", info.messageId);
+    });
+    console.log("Message sent: %s", info.messageId);
+  } catch (error) {
+    console.error('Error al enviar el correo:', error);
+  }
 }
 
 async function enviarMailMedico(datos) {
@@ -70,13 +70,10 @@ async function enviarMailMedico(datos) {
       <b>cmcarrasco2023@gmail.com</b>
       </p>`,
     });
-
+    console.log("Message sent: %s", info.messageId);
   } catch (error) {
-     console.error('Error al enviar el correo:', error);
+    console.error('Error al enviar el correo:', error);
   }
-  
-
-  console.log("Message sent: %s", info.messageId);
 }
 
 async function enviarMailPendientes(datos) {

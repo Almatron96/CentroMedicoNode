@@ -58,6 +58,19 @@ async function actualizarCita(cita) {
     }
 }
 
+async function eliminarCita(cita) {
+    try {
+        const eliminar = {
+            id_cita_medica: cita.id_cita_medica
+        };
+        const resultado = await citaQuerys.eliminarCita(eliminar);
+        return resultado;
+    } catch (error) {
+
+        console.error('Error al eliminar cita.', error);
+        throw new Error(error);
+    }
+}
 
 async function listarCitaDelDia(id_usuario) {
     try {
@@ -125,5 +138,6 @@ module.exports = {
     listarCitasPorCedulaPacienteOMedico,
     listarCitasDelDiaPaciente,
     listarCitasDelPaciente,
-    actualizarCita
+    actualizarCita,
+    eliminarCita
 };

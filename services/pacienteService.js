@@ -78,7 +78,7 @@ async function actualizarPaciente(paciente) {
         await pacienteQuerys.actualizarPaciente(nuevoPaciente);
 
 
-        return 'Pacientge actualizado correctamente.';
+        return 'Paciente actualizado correctamente.';
     } catch (error) {
         throw new Error('Error al guardar el paciente en la base de datos');
     }
@@ -98,5 +98,5 @@ async function listarPaciente() {
 module.exports = {
     guardarPaciente,
     listarPaciente,
-    actualizarPaciente
+    actualizarPaciente,
 };

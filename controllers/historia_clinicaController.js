@@ -14,6 +14,20 @@ async function guardar_historia_clinica(req, res) {
     }
   }
 
+  
+  async function actualizarHistoria(req, res) {
+    try {
+      const resultado = await historia_clinicaService.actualizarHistoria(req.body);
+      if (resultado.error) {
+        return res.status(resultado.status).json(resultado.error);
+      }
+      return res.status(200).json("Historia clínica actualizado correctamente.");
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json('Error interno del servidor');
+    }
+  }
+
   async function actualizarTratamiento(req, res) {
     try {
       const resultado = await historia_clinicaService.actualizarTratamiento(req.body);
@@ -115,5 +129,6 @@ module.exports = {
     listarHistoriaClinicaPorPaciente,
     actualizarTratamiento,
     actualizarExamenFisico,
-    actualizarAntecedente
+    actualizarAntecedente,
+    actualizarHistoria
   };

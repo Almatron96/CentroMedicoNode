@@ -11,4 +11,5 @@ router.post('/listar_citas_por_cedula', citaController.listarCitasPorCedulaPacie
 router.post('/citas_del_dia_paciente', citaController.listarCitasDelDiaPaciente);
 router.post('/citas_del_paciente', citaController.listarCitasDelPaciente);
 router.post('/actualizar', citaController.actualizarCita);
+router.post('/eliminar', citaController.eliminarCita);
 module.exports = router;
